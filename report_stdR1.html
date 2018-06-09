@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>jQuery Columns Examples</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<link id="style" href="css/classic.css" rel="stylesheet" media="screen">
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<style>
+body {
+font-family: helvetica, sans-serif;
+}
+.source {
+font-family: monospace;
+padding: 10px;
+}
+</style>
+</head>
+<body>
+<div id="jquery-script-menu">
+<div class="jquery-script-center">
+
+</div>
+<div class="jquery-script-clear"></div>
+</div>
+</div>
+<h1 style="margin-top:150px;">jQuery Columns Examples</h1>
+<label>Change Theme:</label>
+<select id="theme">
+<option value="classic.css">Classic</option>
+<option value="clean.css">Clean</option>
+</select>
+<h2>Example 2: Setting data from external source</h2>
+<div id="example3"></div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
+<script src="js/jquery.columns-1.0.min.js"></script> 
+<script>
+
+
+
+			//example 2 
+			$.ajax({
+				url:'http://localhost:8000/user_profiles',
+				dataType: 'json', 
+				success: function(json) { 
+					example2 = $('#example2').columns({
+						data:json
+					}); 
+				}
+			}); 
+			
+			//example 3
+			$.ajax({
+				url:'http://localhost:8000/user_profiles',
+				dataType: 'json', 
+				success: function(json) { 
+					example3 = $('#example3').columns({
+						data:json,
+						schema: [
+							//{"header":"ลำดับ", "key":"ROWSN"},
+							//{"header":"ID", "key":"rows", "template":"000{{rows}}"},							
+							{"header":"สาขาวิชา", "key":"PROGRAM_NAME_TH"},
+							{"header":"หลักสูตร", "key":"DEGREE_NAME"},
+							{"header":"จำนวนสมัคร", "key":"NUM_REG"},
+							{"header":"ชำระเงิน", "key":"NUM_PAY"}
+						]
+ 
+					}); 
+				}
+			}); 
+			
+			//example 4
+			$.ajax({
+				url:'http://localhost:8000/user_profiles',
+				dataType: 'json', 
+				success: function(json) { 
+					example4 = $('#example4').columns({
+						data:json,
+						schema: [
+							{"header":"ID", "key":"id", "template":"000{{id}}"},
+							{"header":"Name", "key":"name"},
+							{"header":"Email", "key":"email", "template":'<a href="mailto:{{email}}">{{email}}</a>'},
+							{"header":"Gender", "key":"gender", "condition":function(val) {return (val=="male");}}
+						]
+ 
+					}); 
+				}
+			}); 
+
+			$('#theme').change(function() {
+				$('link').attr('href', 'css/'+$(this).val());
+			})
+			
+			
+		</script>
+
+
+</body>
+</html>
